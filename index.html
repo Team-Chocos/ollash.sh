@@ -1,0 +1,1213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ollash</title>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Advanced CSS Variables */
+        :root {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-tertiary: #21262d;
+            --bg-terminal: #010409;
+            --bg-glass: rgba(13, 17, 23, 0.8);
+            
+            --accent-blue: #58a6ff;
+            --accent-blue-dark: #1f6feb;
+            --accent-cyan: #39d353;
+            --accent-purple: #bc8cff;
+            --accent-orange: #f85149;
+            
+            --text-primary: #f0f6fc;
+            --text-secondary: #7d8590;
+            --text-muted: #484f58;
+            --text-terminal: #e6edf3;
+            --text-success: #3fb950;
+            --text-warning: #d29922;
+            --text-error: #f85149;
+            
+            --border-subtle: #21262d;
+            --border-default: #30363d;
+            --border-strong: #484f58;
+            
+            --shadow-elevated: 0 16px 32px rgba(1, 4, 9, 0.85);
+            --shadow-overlay: 0 0 0 1px rgba(240, 246, 252, 0.1);
+            
+            --gradient-primary: linear-gradient(135deg, #58a6ff 0%, #39d353 100%);
+            --gradient-terminal: linear-gradient(180deg, #010409 0%, #0d1117 100%);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+            opacity: 0.4;
+        }
+
+        .particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: var(--accent-blue);
+            border-radius: 50%;
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Header */
+        .header {
+            padding: 2rem 5vw;
+            background: var(--bg-glass);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-subtle);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .github-link {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            padding: 0.6rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 1.2rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .github-link:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .github-link svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Proper Top Right Buttons */
+        .top-buttons {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .top-btn {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-default);
+            border-radius: 8px;
+            padding: 0.6rem 1.2rem;
+            color: var(--text-primary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .top-btn:hover {
+            background: var(--accent-blue);
+            border-color: var(--accent-blue);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .btn-icon {
+            width: 16px;
+            height: 16px;
+            fill: currentColor;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 4rem 5vw;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 1000px;
+            margin: 0 auto 4rem;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            line-height: 1.1;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .hero-description {
+            font-size: 1.1rem;
+            color: var(--text-muted);
+            max-width: 700px;
+            margin: 0 auto 2rem;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: var(--bg-glass);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--border-subtle);
+            border-radius: 50px;
+            padding: 0.6rem 1.2rem;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .badge:hover {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        /* Terminal Container */
+        .terminal-container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: var(--bg-terminal);
+            border-radius: 16px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-elevated), var(--shadow-overlay);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .terminal-header {
+            background: var(--bg-secondary);
+            padding: 1rem 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+
+        .terminal-controls {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .terminal-buttons {
+            display: flex;
+            gap: 0.75rem;
+        }
+
+        .terminal-button {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .terminal-button:hover {
+            transform: scale(1.1);
+        }
+
+        .close { background: linear-gradient(135deg, #ff5f57, #e74c3c); }
+        .minimize { background: linear-gradient(135deg, #ffbd2e, #f39c12); }
+        .maximize { background: linear-gradient(135deg, #28ca42, #27ae60); }
+
+        .terminal-title {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .terminal-status {
+            display: flex;
+            gap: 1rem;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-success);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        /* BUTTERY SMOOTH TERMINAL */
+        .terminal {
+            height: 600px;
+            padding: 0;
+            background: var(--gradient-terminal);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.2;
+            overflow-y: auto;
+            color: var(--text-terminal);
+        }
+
+        .terminal-line {
+            margin: 0;
+            padding: 2px 1rem;
+            display: block;
+            width: 100%;
+            text-align: left;
+            opacity: 0;
+            transform: translateY(3px);
+            animation: butterSmooth 0.4s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+
+        @keyframes butterSmooth {
+            from {
+                opacity: 0;
+                transform: translateY(3px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .typing-char {
+            opacity: 0;
+            transform: scale(0.95);
+            animation: charSmooth 0.08s cubic-bezier(0.25, 0.1, 0.25, 1) forwards;
+        }
+
+        @keyframes charSmooth {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .cursor {
+            background: var(--accent-blue);
+            animation: smoothCursor 1.5s cubic-bezier(0.25, 0.1, 0.25, 1) infinite;
+            display: inline-block;
+            width: 2px;
+            height: 1em;
+            margin-left: 1px;
+        }
+
+        @keyframes smoothCursor {
+            0%, 40% { opacity: 1; }
+            50%, 90% { opacity: 0; }
+            100% { opacity: 1; }
+        }
+
+        .success { color: var(--text-success); }
+        .warning { color: var(--text-warning); }
+        .error { color: var(--text-error); }
+        .model-selection { color: var(--accent-cyan); }
+        .model-selected { color: var(--text-success); }
+        .model-installed { color: var(--accent-blue); }
+        .prompt { color: var(--accent-blue); font-weight: 600; }
+
+        /* Features Timeline */
+        .features {
+            padding: 6rem 5vw;
+            background: var(--bg-secondary);
+            position: relative;
+        }
+
+        .features::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grid" width="10" height="10" patternUnits="userSpaceOnUse"><path d="M 10 0 L 0 0 0 10" fill="none" stroke="%23484f58" stroke-width="0.5" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grid)"/></svg>');
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .section-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .timeline {
+            max-width: 900px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--accent-blue);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 80px;
+            margin-bottom: 4rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 21px;
+            top: 0;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: var(--accent-blue);
+            box-shadow: 0 0 0 6px var(--bg-secondary);
+        }
+
+        .timeline-content {
+            background: var(--bg-tertiary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 12px;
+            padding: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-elevated);
+        }
+
+        .timeline-content h3 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: var(--accent-blue);
+        }
+
+        .timeline-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* 2x3 Model Grid */
+        .models {
+            padding: 4rem 5vw 6rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .models h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            text-align: center;
+            color: var(--accent-blue);
+        }
+
+        .model-list {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            max-width: 900px;
+            margin: 0 auto 2rem;
+        }
+
+        .model-item {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .model-item:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-2px);
+        }
+
+        .model-item.placeholder {
+            border: 2px dashed var(--border-default);
+            background: var(--bg-tertiary);
+            opacity: 0.7;
+        }
+
+        .model-item.placeholder:hover {
+            border-color: var(--accent-blue);
+            opacity: 0.9;
+        }
+
+        .model-name {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--accent-cyan);
+            margin-bottom: 0.5rem;
+        }
+
+        .model-name.placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .model-desc {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.75rem;
+        }
+
+        .model-desc.placeholder {
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .model-params {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+
+        .model-size {
+            color: var(--text-muted);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .model-status {
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .model-status.recommended {
+            background: var(--accent-cyan);
+            color: var(--bg-primary);
+        }
+
+        .model-status.research {
+            background: var(--accent-blue);
+            color: var(--bg-primary);
+        }
+
+        /* Contact info */
+        .contact-info {
+            text-align: center;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 2rem;
+            padding: 1rem;
+            border-top: 1px solid var(--border-subtle);
+        }
+
+        .contact-info a {
+            color: var(--accent-blue);
+            text-decoration: none;
+        }
+
+        .contact-info a:hover {
+            text-decoration: underline;
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-tertiary);
+            padding: 3rem 5vw 2rem;
+            border-top: 1px solid var(--border-subtle);
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .footer-left {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .team-chocos {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .footer-right {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .social-link {
+            width: 40px;
+            height: 40px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-subtle);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-link:hover {
+            background: var(--accent-blue);
+            color: var(--text-primary);
+            transform: translateY(-2px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+            fill: currentColor;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            .header-left {
+                justify-content: center;
+            }
+            
+            .timeline::before {
+                left: 15px;
+            }
+            
+            .timeline-item {
+                padding-left: 50px;
+            }
+            
+            .terminal {
+                height: 400px;
+                font-size: 0.8rem;
+            }
+            
+            .model-list {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        /* Scrollbar Styling */
+        .terminal::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .terminal::-webkit-scrollbar-track {
+            background: var(--bg-terminal);
+            border-radius: 4px;
+        }
+
+        .terminal::-webkit-scrollbar-thumb {
+            background: var(--border-default);
+            border-radius: 4px;
+        }
+
+        .terminal::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-blue);
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="bg-particles" id="particles"></div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-content">
+            <div class="header-left">
+                <a href="https://github.com/Team-Chocos/ollash" class="github-link">
+                    <!-- GitHub Official SVG Logo -->
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/>
+                    </svg>
+                </a>
+                <div class="brand">Ollash</div>
+            </div>
+            <div class="top-buttons">
+                <a href="https://ollama.com/download" class="top-btn">
+                    <!-- Ollama Official SVG Logo -->
+                    <svg class="btn-icon" viewBox="0 0 256 256" fill="currentColor">
+                        <path d="M128 0C57.31 0 0 57.31 0 128s57.31 128 128 128 128-57.31 128-128S198.69 0 128 0zm0 240c-61.86 0-112-50.14-112-112S66.14 16 128 16s112 50.14 112 112-50.14 112-112 112z"/>
+                        <circle cx="128" cy="80" r="16"/>
+                        <path d="M128 120c-26.51 0-48 21.49-48 48v32h16v-32c0-17.67 14.33-32 32-32s32 14.33 32 32v32h16v-32c0-26.51-21.49-48-48-48z"/>
+                    </svg>
+                    <span>Ollama</span>
+                </a>
+                <a href="https://pypi.org/project/ollash/" class="top-btn">
+                    <!-- Python Official SVG Logo -->
+                    <svg class="btn-icon" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M14.25.18l.9.2.73.26.59.3.45.32.34.34.25.34.16.33.1.3.04.26.02.2-.01.13V8.5l-.05.63-.13.55-.21.46-.26.38-.3.31-.33.25-.35.19-.35.14-.33.1-.3.07-.26.04-.21.02H8.77l-.69.05-.59.14-.5.22-.41.27-.33.32-.27.35-.2.36-.15.37-.1.35-.07.32-.04.27-.02.21v3.06H3.17l-.21-.03-.28-.07-.32-.12-.35-.18-.36-.26-.36-.36-.35-.46-.32-.59-.28-.73-.21-.88-.14-1.05-.05-1.23.06-1.22.16-1.04.24-.87.32-.71.36-.57.4-.44.42-.33.42-.24.4-.16.36-.1.32-.05.24-.01h.16l.06.01h8.16v-.83H6.18l-.01-2.75-.02-.37.05-.34.11-.31.17-.28.25-.26.31-.23.38-.2.44-.18.51-.15.58-.12.64-.1.71-.06.77-.04.84-.02 1.27.05zm-6.3 1.98l-.23.33-.08.41.08.41.23.34.33.22.41.09.41-.09.33-.22.23-.34.08-.41-.08-.41-.23-.33-.33-.22-.41-.09-.41.09zm13.09 3.95l.28.06.32.12.35.18.36.27.36.35.35.47.32.59.28.73.21.88.14 1.04.05 1.23-.06 1.23-.16 1.04-.24.86-.32.71-.36.57-.4.45-.42.33-.42.24-.4.16-.36.09-.32.05-.24.02-.16-.01h-8.22v.82h5.84l.01 2.76.02.36-.05.34-.11.31-.17.29-.25.25-.31.24-.38.2-.44.17-.51.15-.58.13-.64.09-.71.07-.77.04-.84.01-1.27-.04-1.07-.14-.9-.2-.73-.25-.59-.3-.45-.33-.34-.34-.25-.34-.16-.33-.1-.3-.04-.25-.02-.2.01-.13v-5.34l.05-.64.13-.54.21-.46.26-.38.3-.32.33-.24.35-.2.35-.14.33-.1.3-.06.26-.04.21-.02.13-.01h5.84l.69-.05.59-.14.5-.21.41-.28.33-.32.27-.35.2-.36.15-.36.1-.35.07-.32.04-.28.02-.21V6.07h2.09l.14.01zm-6.47 14.25l-.23.33-.08.41.08.41.23.33.33.23.41.08.41-.08.33-.23.23-.33.08-.41-.08-.41-.23-.33-.33-.23-.41-.08-.41.08z"/>
+                    </svg>
+                    <span>PyPI</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Natural Language Terminal</h1>
+            <p class="hero-subtitle">Transform plain English into powerful, safe terminal commands</p>
+            <p class="hero-description">
+                Powered by local LLMs with zero cloud dependency. Safe, fast, and intelligent command generation 
+                for Linux, macOS, and Windows with built-in safety checks and confirmation prompts.
+            </p>
+            
+            <div class="hero-badges">
+                <div class="badge">
+                    <span>🔒</span>
+                    <span>100% Local</span>
+                </div>
+                <div class="badge">
+                    <span>🛡️</span>
+                    <span>Safety First</span>
+                </div>
+                <div class="badge">
+                    <span>🌐</span>
+                    <span>Cross Platform</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Terminal Demo -->
+        <div class="terminal-container">
+            <div class="terminal-header">
+                <div class="terminal-controls">
+                    <div class="terminal-buttons">
+                        <div class="terminal-button close"></div>
+                        <div class="terminal-button minimize"></div>
+                        <div class="terminal-button maximize"></div>
+                    </div>
+                    <div class="terminal-title">user@ollash:~</div>
+                </div>
+                <div class="terminal-status">
+                    <div class="status-indicator">
+                        <div class="status-dot"></div>
+                        <span>Connected</span>
+                    </div>
+                    <div class="status-indicator">
+                        <span>llama3:latest</span>
+                    </div>
+                </div>
+            </div>
+            <div class="terminal" id="terminal"></div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="features">
+        <div class="section-header">
+            <h2 class="section-title">🚀 Advanced Features</h2>
+            <p class="section-subtitle">
+                Enterprise-grade natural language processing with intelligent safety mechanisms
+            </p>
+        </div>
+        
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🧠 Natural Language Processing</h3>
+                    <p>Advanced NLP engine that understands context, intent, and converts natural language to precise shell commands across Bash, Zsh, PowerShell, and Fish shells.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🔍 Semantic Search Engine</h3>
+                    <p>Intelligent command history search that understands meaning, not just keywords. Find commands based on what they do, not just what they're called.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>🛡️ Multi-Layer Safety</h3>
+                    <p>Comprehensive safety mechanisms including command analysis, risk assessment, and smart confirmation prompts before executing potentially dangerous operations.</p>
+                </div>
+            </div>
+            
+            <div class="timeline-item">
+                <div class="timeline-content">
+                    <h3>📈 Adaptive Learning</h3>
+                    <p>Machine learning system that improves from every confirmed command, adapting to your workflow patterns and becoming more accurate over time.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 2x3 Model Support Grid -->
+    <section class="models">
+        <h2>🤖 Supported Models</h2>
+        <div class="model-list">
+            <!-- Real Models (Row 1) -->
+            <div class="model-item">
+                <div class="model-name">llama3:latest</div>
+                <div class="model-desc">Meta's flagship model with superior reasoning</div>
+                <div class="model-params">
+                    <span class="model-size">8B params</span>
+                    <span class="model-status recommended">RECOMMENDED</span>
+                </div>
+            </div>
+            
+            <div class="model-item">
+                <div class="model-name">codellama</div>
+                <div class="model-desc">Code generation and programming assistant</div>
+                <div class="model-params">
+                    <span class="model-size">7B params</span>
+                    <span class="model-status recommended">RECOMMENDED</span>
+                </div>
+            </div>
+            
+            <div class="model-item">
+                <div class="model-name">quen3</div>
+                <div class="model-desc">Advanced multilingual language model</div>
+                <div class="model-params">
+                    <span class="model-size">7B params</span>
+                    <span class="model-status recommended">RECOMMENDED</span>
+                </div>
+            </div>
+            
+            <!-- Placeholder Models (Row 2) -->
+            <div class="model-item placeholder">
+                <div class="model-name placeholder">Coming Soon...</div>
+                <div class="model-desc placeholder">New model under development</div>
+                <div class="model-params">
+                    <span class="model-size">TBD</span>
+                    <span class="model-status research">RESEARCH</span>
+                </div>
+            </div>
+            
+            <div class="model-item placeholder">
+                <div class="model-name placeholder">Coming Soon...</div>
+                <div class="model-desc placeholder">New model under development</div>
+                <div class="model-params">
+                    <span class="model-size">TBD</span>
+                    <span class="model-status research">RESEARCH</span>
+                </div>
+            </div>
+            
+            <div class="model-item placeholder">
+                <div class="model-name placeholder">Coming Soon...</div>
+                <div class="model-desc placeholder">New model under development</div>
+                <div class="model-params">
+                    <span class="model-size">TBD</span>
+                    <span class="model-status research">RESEARCH</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Contact Info -->
+        <div class="contact-info">
+            For adding models reach out to <a href="mailto:teamcornflakesxx@gmail.com">teamcornflakesxx@gmail.com</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-left">
+                <div class="team-chocos">Developed by Team Chocos</div>
+            </div>
+            <div class="footer-right">
+                <a href="https://instagram.com" class="social-link">
+                    <!-- Instagram Official SVG Logo -->
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                </a>
+                <a href="https://twitter.com" class="social-link">
+                    <!-- Twitter/X Official SVG Logo -->
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                    </svg>
+                </a>
+                <a href="https://github.com/Team-Chocos/ollash" class="social-link">
+                    <!-- GitHub Official SVG Logo -->
+                    <svg viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12Z"/>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FIXED TERMINAL - PROPER BOX THAT FITS TERMINAL WIDTH
+        const terminal = document.getElementById('terminal');
+        let currentStep = 0;
+
+        const terminalSequence = [
+            'user@ollash:~$ ollash shell',
+            '',
+            '🤖  Select Ollama Model: ⬚ < 52/52 —',
+            '> nomic-embed-text:latest (installed)',
+            '  westenfelder/NL2SH:latest (installed)', 
+            '  gemma:2b (installed)',
+            '  llama3:latest (installed)',
+            '  llama3.3',
+            '  llama3.2',
+            '  llama3.2:1b',
+            '  llama3.2:3b',
+            '  llama3.1',
+            '  llama3.1:405b',
+            '  llama2',
+            '',
+            'Selected: llama3:latest',
+            
+            '✓ Ready! AI shell with semantic search enabled',
+            'ℹ Type \':help\' for commands',
+            '',
+            '[llama3:latest] ❯ make me a folder named Team-Chocos',
+            '',
+            '🧠 Generating command...',
+            '⚡ Analyzing natural language input',
+            '🔍 Searching command database',
+            '✅ Command generated successfully',
+            '',
+            '→ mkdir Team-Chocos',
+            '',
+            'Execute? [y/N/e(dit)] ❯ y',
+            '',
+            '⚡ Executing: mkdir Team-Chocos',
+            '──────────────────────────────────────────────────',
+            '──────────────────────────────────────────────────',
+            '✓ Command completed successfully',
+            '🧠 Learning from this command...',
+            '',
+            '[llama3:latest] ❯ :history where did i make the Team-Chocos folder',
+            '',
+            '🔍 Searching command history...',
+            '📚 Analyzing past commands',
+            '🎯 Found matching context',
+            '',
+            '→ ls ./Team-Chocos🔍',
+            '',
+            '💡 Based on your past similar commands',
+            '',
+            'user@ollash:~$ :exit',
+            '',
+            'GoodBye',
+            'Model Stopped !'
+        ];
+
+        // Ultra smooth typing with slower, more natural speeds
+        function butterSmoothType(element, text, callback) {
+            let i = 0;
+            const baseSpeed = 80;  // Slower base speed
+            const speedVariation = 30;  // More variation for natural feel
+            
+            function typeChar() {
+                if (i < text.length) {
+                    const char = text.charAt(i);
+                    const span = document.createElement('span');
+                    span.className = 'typing-char';
+                    span.textContent = char;
+                    element.appendChild(span);
+                    
+                    // Use setTimeout for smoother animation timing
+                    setTimeout(() => {
+                        span.style.opacity = '1';
+                        span.style.transform = 'scale(1)';
+                    }, 10);
+                    
+                    i++;
+                    
+                    // Natural variable typing speed
+                    const speed = baseSpeed + Math.random() * speedVariation;
+                    setTimeout(typeChar, speed);
+                } else {
+                    // Longer pause after completion for more natural feel
+                    setTimeout(callback, 300);
+                }
+            }
+            typeChar();
+        }
+
+        function addSmoothTerminalLine(text, delay = 0) {
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    const line = document.createElement('div');
+                    line.className = 'terminal-line';
+                    
+                    // Apply colors based on content
+                    if (text.includes('user@ollash:~$')) {
+                        line.innerHTML = text.replace('user@ollash:~$', '<span class="prompt">user@ollash:~$</span>');
+                    } else if (text.includes('[llama3:latest] ❯')) {
+                        line.innerHTML = text.replace('[llama3:latest] ❯', '<span class="prompt">[llama3:latest] ❯</span>');
+                    } else if (text.includes('✓')) {
+                        line.innerHTML = `<span class="success">${text}</span>`;
+                    } else if (text.includes('⚡') || text.includes('🧠') || text.includes('🔍')) {
+                        line.innerHTML = `<span class="warning">${text}</span>`;
+                    } else if (text.includes('→')) {
+                        line.innerHTML = text.replace('→', '<span class="warning">→</span>');
+                    } else if (text.includes('💡')) {
+                        line.innerHTML = `<span class="success">${text}</span>`;
+                    } else if (text.includes('(installed)')) {
+                        line.innerHTML = text.replace('(installed)', '<span class="model-installed">(installed)</span>');
+                    } else if (text.startsWith('>')) {
+                        line.innerHTML = `<span class="model-selected">${text}</span>`;
+                    } else if (text.includes('Selected:')) {
+                        line.innerHTML = `<span class="success">${text}</span>`;
+                    } else {
+                        line.textContent = text;
+                    }
+                    
+                    terminal.appendChild(line);
+                    
+                    // Ultra smooth scroll with easing
+                    terminal.scrollTo({
+                        top: terminal.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                    
+                    resolve();
+                }, delay);
+            });
+        }
+
+        async function runButterSmoothTerminal() {
+            if (currentStep >= terminalSequence.length) {
+                // Smooth restart with longer pause
+                await new Promise(resolve => setTimeout(resolve, 4000));
+                
+                // Fade out effect before clearing
+                terminal.style.opacity = '0.3';
+                setTimeout(() => {
+                    terminal.innerHTML = '';
+                    terminal.style.opacity = '1';
+                    currentStep = 0;
+                    runButterSmoothTerminal();
+                }, 500);
+                return;
+            }
+
+            const text = terminalSequence[currentStep];
+            
+            // Handle command lines with butter smooth typing
+            if (text.includes('user@ollash:~$') || text.includes('[llama3:latest] ❯')) {
+                const line = document.createElement('div');
+                line.className = 'terminal-line';
+                
+                if (text.includes('user@ollash:~$')) {
+                    const promptText = 'user@ollash:~$ ';
+                    const commandText = text.replace('user@ollash:~$ ', '');
+                    line.innerHTML = `<span class="prompt">${promptText}</span><span class="typing-container"></span>`;
+                    terminal.appendChild(line);
+                    
+                    const typingContainer = line.querySelector('.typing-container');
+                    butterSmoothType(typingContainer, commandText, () => {
+                        currentStep++;
+                        setTimeout(runButterSmoothTerminal, 600);
+                    });
+                } else if (text.includes('[llama3:latest] ❯')) {
+                    const promptText = '[llama3:latest] ❯ ';
+                    const commandText = text.replace('[llama3:latest] ❯ ', '');
+                    line.innerHTML = `<span class="prompt">${promptText}</span><span class="typing-container"></span>`;
+                    terminal.appendChild(line);
+                    
+                    const typingContainer = line.querySelector('.typing-container');
+                    butterSmoothType(typingContainer, commandText, () => {
+                        currentStep++;
+                        setTimeout(runButterSmoothTerminal, 600);
+                    });
+                }
+                
+                // Smooth scroll during typing
+                terminal.scrollTo({
+                    top: terminal.scrollHeight,
+                    behavior: 'smooth'
+                });
+                
+            } else {
+                // Regular output lines with smooth timing
+                await addSmoothTerminalLine(text);
+                currentStep++;
+                
+                // More natural, varied timing
+                const delay = text === '' ? 120 : 300;
+                setTimeout(runButterSmoothTerminal, delay);
+            }
+        }
+
+        // Start butter smooth terminal animation
+        setTimeout(runButterSmoothTerminal, 1200);
+
+        // Smooth particle system
+        function createSmoothParticles() {
+            const particles = document.getElementById('particles');
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 20 + 's';
+                particle.style.animationDuration = (Math.random() * 10 + 10) + 's';
+                particles.appendChild(particle);
+            }
+        }
+
+        // Initialize everything with smooth transitions
+        document.addEventListener('DOMContentLoaded', () => {
+            createSmoothParticles();
+            
+            // Butter smooth intersection observer
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach((entry, index) => {
+                    if (entry.isIntersecting) {
+                        // More staggered, smooth entrance
+                        setTimeout(() => {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }, index * 80);
+                    }
+                });
+            }, { 
+                threshold: 0.1,
+                rootMargin: '0px 0px -30px 0px'
+            });
+
+            // Observe elements for butter smooth animations
+            document.querySelectorAll('.timeline-item, .model-item').forEach(el => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.8s cubic-bezier(0.25, 0.1, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.1, 0.25, 1)';
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
