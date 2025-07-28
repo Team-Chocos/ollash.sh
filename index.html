@@ -656,10 +656,43 @@
             align-items: center;
             gap: 1rem;
         }
+        
+        .model-desc a {
+        color: #007BFF; /* Bootstrap blue or pick your brand color */
+        font-weight: 500;
+        }
+
+        .model-desc a:hover {
+            color: #0056b3; /* Slightly darker on hover */
+            text-decoration: underline;
+        }
+                
+
+        .model-item a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .model-item a:hover {
+            text-decoration: underline;
+            color: inherit;
+        }
+
 
         .team-chocos {
             color: var(--text-secondary);
             font-size: 0.9rem;
+        }
+
+        .read-paper-link {
+            color: #28a745;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .read-paper-link:hover {
+            color: #1e7e34;
+            text-decoration: underline;
         }
 
         .footer-right {
@@ -788,10 +821,10 @@
     <!-- Hero Section -->
     <section class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">Natural Language Terminal</h1>
-            <p class="hero-subtitle">Transform plain English into powerful, safe terminal commands</p>
+            <h1 class="hero-title">Text to Shell $t2sh</h1>
+            <p class="hero-subtitle">Turn plain language into powerful commands.</p>
             <p class="hero-description">
-                Powered by local LLMs with zero cloud dependency. Safe, fast, and intelligent command generation 
+                Powered by Ollama. Safe, fast, and intelligent command generation 
                 for Linux, macOS, and Windows with built-in safety checks and confirmation prompts.
             </p>
             
@@ -836,112 +869,150 @@
         </div>
     </section>
 
-    <!-- Features -->
-    <section class="features">
-        <div class="section-header">
-            <h2 class="section-title">🚀 Advanced Features</h2>
-            <p class="section-subtitle">
-                Enterprise-grade natural language processing with intelligent safety mechanisms
-            </p>
-        </div>
-        
-        <div class="timeline">
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>🧠 Natural Language Processing</h3>
-                    <p>Advanced NLP engine that understands context, intent, and converts natural language to precise shell commands across Bash, Zsh, PowerShell, and Fish shells.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>🔍 Semantic Search Engine</h3>
-                    <p>Intelligent command history search that understands meaning, not just keywords. Find commands based on what they do, not just what they're called.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>🛡️ Multi-Layer Safety</h3>
-                    <p>Comprehensive safety mechanisms including command analysis, risk assessment, and smart confirmation prompts before executing potentially dangerous operations.</p>
-                </div>
-            </div>
-            
-            <div class="timeline-item">
-                <div class="timeline-content">
-                    <h3>📈 Adaptive Learning</h3>
-                    <p>Machine learning system that improves from every confirmed command, adapting to your workflow patterns and becoming more accurate over time.</p>
-                </div>
+<!-- Features -->
+<section class="features">
+    <div class="section-header">
+        <h2 class="section-title">🚀 Advanced Features</h2>
+        <p class="section-subtitle">
+            Natural command execution with semantic search and safety-first automation
+        </p>
+    </div>
+    
+    <div class="timeline">
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h3>🔍 Interro-Powered Semantic Search</h3>
+                <p>Find files and commands on your system using natural language. Powered by <code>interro</code>, it understands meaning, not just filenames or keywords.</p>
             </div>
         </div>
-    </section>
 
-    <!-- 2x3 Model Support Grid -->
-    <section class="models">
-        <h2>🤖 Supported Models</h2>
-        <div class="model-list">
-            <!-- Real Models (Row 1) -->
-            <div class="model-item">
-                <div class="model-name">llama3:latest</div>
-                <div class="model-desc">Meta's flagship model with superior reasoning</div>
-                <div class="model-params">
-                    <span class="model-size">8B params</span>
-                    <span class="model-status recommended">RECOMMENDED</span>
-                </div>
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h3>📦 Local GGUF Model Support</h3>
+                <p>Load and run open-source LLMs locally via GGUF format. Full support for Hugging Face-hosted models—no cloud dependency, full privacy.</p>
             </div>
-            
-            <div class="model-item">
-                <div class="model-name">codellama</div>
-                <div class="model-desc">Code generation and programming assistant</div>
-                <div class="model-params">
-                    <span class="model-size">7B params</span>
-                    <span class="model-status recommended">RECOMMENDED</span>
-                </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h3>🕓 History-Aware Shell Commands</h3>
+                <p>Generate shell commands based on your previous command history and intent. Ollash learns from what you've done to help you do it faster.</p>
             </div>
-            
-            <div class="model-item">
-                <div class="model-name">quen3</div>
-                <div class="model-desc">Advanced multilingual language model</div>
-                <div class="model-params">
-                    <span class="model-size">7B params</span>
-                    <span class="model-status recommended">RECOMMENDED</span>
-                </div>
+        </div>
+
+        <div class="timeline-item">
+            <div class="timeline-content">
+                <h3>🛡️ Reliable Multi-Layer Safety</h3>
+                <p>Built-in command validation, risk assessment, and secure confirmation prompts protect you from harmful or destructive operations before they run.</p>
             </div>
-            
-            <!-- Placeholder Models (Row 2) -->
-            <div class="model-item placeholder">
-                <div class="model-name placeholder">Coming Soon...</div>
-                <div class="model-desc placeholder">New model under development</div>
-                <div class="model-params">
-                    <span class="model-size">TBD</span>
-                    <span class="model-status research">RESEARCH</span>
-                </div>
-            </div>
-            
-            <div class="model-item placeholder">
-                <div class="model-name placeholder">Coming Soon...</div>
-                <div class="model-desc placeholder">New model under development</div>
-                <div class="model-params">
-                    <span class="model-size">TBD</span>
-                    <span class="model-status research">RESEARCH</span>
-                </div>
-            </div>
-            
-            <div class="model-item placeholder">
-                <div class="model-name placeholder">Coming Soon...</div>
-                <div class="model-desc placeholder">New model under development</div>
-                <div class="model-params">
-                    <span class="model-size">TBD</span>
-                    <span class="model-status research">RESEARCH</span>
-                </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- 2x3 Model Support Grid -->
+<section class="models">
+    <h2>🤖 Supported Models</h2>
+    <div class="model-list">
+        <!-- Real Models (Row 1) -->
+        <div class="model-item">
+            <div class="model-name">llama3</div>
+            <div class="model-desc">Meta's flagship model with superior reasoning</div>
+            <div class="model-params">
+                <span class="model-size">8B params</span>
+                <span class="model-status recommended">RECOMMENDED</span>
             </div>
         </div>
         
-        <!-- Contact Info -->
-        <div class="contact-info">
-            For adding models reach out to <a href="mailto:teamcornflakesxx@gmail.com">teamcornflakesxx@gmail.com</a>
+        <div class="model-item">
+            <div class="model-name">codellama</div>
+            <div class="model-desc">Code generation and programming assistant</div>
+            <div class="model-params">
+                <span class="model-size">7B params</span>
+                <span class="model-status recommended">RECOMMENDED</span>
+            </div>
         </div>
-    </section>
+        
+        <div class="model-item">
+            <div class="model-name">Qwen3</div>
+            <div class="model-desc">Advanced multilingual language model</div>
+            <div class="model-params">
+                <span class="model-size">7B params</span>
+                <span class="model-status recommended">RECOMMENDED</span>
+            </div>
+        </div>
+        
+            <!-- Custom Teamcornflakes Models (Row 2) -->
+    <div class="model-item">
+        <div class="model-name">
+            <a href="https://huggingface.co/westenfelder/Qwen2.5-Coder-3B-Instruct-NL2SH" target="_blank">
+                Qwen2.5-Coder-3B-Instruct-NL2SH-gguf
+            </a>
+        </div>
+        <div class="model-desc">
+            Qwen2.5-Coder (3B) model fine-tuned for natural language to shell command translation<br>
+            by researchers at MIT CSAIL —
+            <a class="read-paper-link" href="https://arxiv.org/pdf/2502.06858" target="_blank">read paper</a>
+        </div>
+
+        <div class="model-params">
+            <span class="model-size">3B params</span>
+            <span class="model-status recommended">RESEARCH</span>
+        </div>
+    </div>
+
+
+    <div class="model-item">
+        <div class="model-name">
+            <a href="https://huggingface.co/westenfelder/Llama-3.2-3B-Instruct-NL2SH" target="_blank">
+                llama-3.2-3b-instruct-nl2sh-gguf
+            </a>
+        </div>
+        <div class="model-desc">
+            LLaMA 3.2 (3B) model fine-tuned for natural language to shell command translation<br>
+            by researchers at MIT CSAIL —
+            <a href="https://arxiv.org/pdf/2502.06858" target="_blank">read paper</a>
+        </div>
+
+        <div class="model-params">
+            <span class="model-size">3B params</span>
+            <span class="model-status recommended">RESEARCH</span>
+        </div>
+    </div>
+
+
+
+
+<div class="model-item">
+    <div class="model-name">
+        <a href="https://huggingface.co/westenfelder/Qwen2.5-Coder-7B-Instruct-NL2SH" target="_blank">
+            Qwen2.5-Coder-7B-Instruct-NL2SH-gguf
+        </a>
+    </div>
+    <div class="model-desc">
+    Qwen2.5-Coder (7B) model fine-tuned for natural language to shell command translation<br>
+    by researchers at MIT CSAIL —
+    <a class="read-paper-link" href="https://arxiv.org/pdf/2502.06858" target="_blank">read paper</a>
+    </div>
+
+    <div class="model-params">
+        <span class="model-size">7B params</span>
+        <span class="model-status recommended">RESEARCH</span>
+    </div>
+</div>
+
+
+    </div>
+
+
+
+    <!-- Contact Info -->
+    <div class="contact-info">
+        For adding models reach out to
+        <a href="mailto:teamcornflakesxx@gmail.com">teamcornflakesxx@gmail.com</a>
+    </div>
+</section>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -980,30 +1051,24 @@
         const terminalSequence = [
             'user@ollash:~$ ollash shell',
             '',
-            '🤖  Select Ollama Model: ⬚ < 52/52 —',
-            '> nomic-embed-text:latest (installed)',
-            '  westenfelder/NL2SH:latest (installed)', 
-            '  gemma:2b (installed)',
-            '  llama3:latest (installed)',
-            '  llama3.3',
-            '  llama3.2',
-            '  llama3.2:1b',
-            '  llama3.2:3b',
-            '  llama3.1',
-            '  llama3.1:405b',
-            '  llama2',
+            '   Select Ollama Model: ⬚ < 52/52 —',
+            '> llama3 (installed)',
+            '  Qwen',
+            '  Qemma',
+            '  Deepseek',
+            '  huggingface (experimental)',
             '',
-            'Selected: llama3:latest',
+            'Selected: llama3',
             
-            '✓ Ready! AI shell with semantic search enabled',
-            'ℹ Type \':help\' for commands',
+            '✓ Ready! AI powered shell with semantic search enabled',
+            'i Type \':help\' for commands',
             '',
-            '[llama3:latest] ❯ make me a folder named Team-Chocos',
+            '[llama3] ❯ make me a folder named Team-Chocos',
             '',
-            '🧠 Generating command...',
-            '⚡ Analyzing natural language input',
-            '🔍 Searching command database',
-            '✅ Command generated successfully',
+            '  Generating command...',
+            '  Analyzing natural language input',
+            '  Searching command database',
+            '  Command generated successfully',
             '',
             '→ mkdir Team-Chocos',
             '',
@@ -1013,17 +1078,17 @@
             '──────────────────────────────────────────────────',
             '──────────────────────────────────────────────────',
             '✓ Command completed successfully',
-            '🧠 Learning from this command...',
+            '  Learning from this command...',
             '',
-            '[llama3:latest] ❯ :history where did i make the Team-Chocos folder',
+            '[llama3] ❯ :history where did i make the Team-Chocos folder',
             '',
-            '🔍 Searching command history...',
-            '📚 Analyzing past commands',
-            '🎯 Found matching context',
+            '  Searching command history...',
+            '  Analyzing past commands',
+            '  Found matching context',
             '',
-            '→ ls ./Team-Chocos🔍',
+            '→ ls ./Team-Chocos',
             '',
-            '💡 Based on your past similar commands',
+            '  Based on your past similar commands',
             '',
             'user@ollash:~$ :exit',
             '',
