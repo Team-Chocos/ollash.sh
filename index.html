@@ -747,10 +747,6 @@
                 padding-left: 50px;
             }
             
-            .timeline-item::before {
-                left: 6px;
-            }
-            
             .terminal {
                 height: 400px;
                 font-size: 0.8rem;
@@ -759,13 +755,12 @@
             .model-list {
                 grid-template-columns: 1fr;
             }
-        
+
             .footer-content {
                 flex-direction: column;
                 text-align: center;
             }
         }
-
 
         /* Scrollbar Styling */
         .terminal::-webkit-scrollbar {
@@ -785,6 +780,30 @@
         .terminal::-webkit-scrollbar-thumb:hover {
             background: var(--accent-blue);
         }
+        /* Video Demo Section */
+        .video-demo {
+            padding: 4rem 5vw;
+            background: var(--bg-secondary);
+            text-align: center;
+        }
+
+        .video-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            max-width: 1000px;
+        }
+
+        .video-container video {
+            max-width: 900px;
+            width: 100%;
+            height: auto;
+            border-radius: 12px;
+            border: 1px solid var(--border-subtle);
+            box-shadow: var(--shadow-elevated);
+        }
+
     </style>
 </head>
 <body>
@@ -1021,6 +1040,24 @@
         For adding models reach out to
         <a href="mailto:teamcornflakesxx@gmail.com">Team Chocos</a>
     </div>
+</section>
+
+<!-- Video Demo Section -->
+<section class="video-demo">
+    <div class="section-header">
+        <h2 class="section-title">See Ollash in Action</h2>
+        <p class="section-subtitle">
+            Watch how Ollash transforms natural language into powerful shell commands
+        </p>
+    </div>
+    
+    <div class="video-container">
+        <video controls>
+            <source src="video.mkv" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+    </div>
+    
 </section>
 
 
